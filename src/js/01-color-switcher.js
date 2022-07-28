@@ -11,13 +11,13 @@ btnStart.addEventListener('click', onListenerBtnStart);
 const timer = {
     firstColor() {
         return  = setTimeout(() => {
-            body.style.backgroundColor = getRandomHexColor();
+            return body.style.backgroundColor = getRandomHexColor();
         }, 0);
     },
 
     nextColor() {
         return timerId = setInterval(() => {
-            body.style.backgroundColor = getRandomHexColor();
+            return body.style.backgroundColor = getRandomHexColor();
         }, 1000);
     }        
 }  
