@@ -10,7 +10,7 @@ btnStart.addEventListener('click', onListenerBtnStart);
 
 const timer = {
     firstColor() {
-        return  = setTimeout(() => {
+        return startId = setTimeout(() => {
             return body.style.backgroundColor = getRandomHexColor();
         }, 0);
     },
