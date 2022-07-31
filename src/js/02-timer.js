@@ -2,6 +2,8 @@ import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 
 const btn = document.querySelector('button[data-start]');
+const input = document.querySelector('#datetime-picker');
+// console.log(input);
 const dd = document.querySelector('span[data-days]');
 const hh = document.querySelector('span[data-hours]');
 const mm = document.querySelector('span[data-minutes]');
@@ -30,14 +32,11 @@ const options = {
   },
 };
 
-const timeIsOut = {
-    daysZero: `00`, hoursZero: `00`, minutesZero: `00`, secondsZero: "00",
-}
-console.log(timeIsOut);
 
 const fp = flatpickr("#datetime-picker", options);
 
 function onBtnClick() {
+    input.setAttribute('disabled', 'true');
     timer();
     convertMs(deltaTime);
 }
@@ -48,22 +47,16 @@ function timer() {
     timerId = setInterval(() => {
         const currentTime = Date.now();
         deltaTime = finalDates.getTime() - currentTime;
-        // console.log(deltaTime);
         const { days, hours, minutes, seconds } = convertMs(deltaTime);
 
-        // const timeLeft = convertMs(deltaTime);
         if (deltaTime > 0) {
-            // const { days, hours, minutes, seconds } = timeLeft;
-
             onSpanResult({ days, hours, minutes, seconds });
-
         } else {
+            input.removeAttribute('disabled');
             return;
         }
-        // console.log(timeLeft);
-        // onSpanResult({ days, hours, minutes, seconds });
 
-        }, 1000);
+    }, 1000);
 }
 
 function addLeadingZero(value) {
