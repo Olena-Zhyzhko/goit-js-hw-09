@@ -1,9 +1,9 @@
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
+import Notiflix from 'notiflix';
 
 const btn = document.querySelector('button[data-start]');
 const input = document.querySelector('#datetime-picker');
-// console.log(input);
 const dd = document.querySelector('span[data-days]');
 const hh = document.querySelector('span[data-hours]');
 const mm = document.querySelector('span[data-minutes]');
@@ -15,7 +15,6 @@ let finalDates;
 let deltaTime;
 
 
-
 const options = {
   enableTime: true,
   time_24hr: true,
@@ -24,7 +23,7 @@ const options = {
     onClose(selectedDates) {
         finalDates = selectedDates[0];
     if (finalDates.getTime() < fp.now.getTime()) {
-        window.alert("Please choose a date in the future");
+        Notiflix.Confirm.show("Please choose a date in the future");
     } else {
         btn.disabled = false;
         btn.addEventListener('click', onBtnClick, { once: true });
@@ -41,8 +40,6 @@ function onBtnClick() {
     convertMs(deltaTime);
 }
 
-// document.querySelector('input[datetime-picker]').disabled = true;
-
 function timer() {
     timerId = setInterval(() => {
         const currentTime = Date.now();
@@ -55,7 +52,6 @@ function timer() {
             input.removeAttribute('disabled');
             return;
         }
-
     }, 1000);
 }
 
@@ -88,17 +84,4 @@ function onSpanResult({ days, hours, minutes, seconds }) {
     mm.textContent = minutes;
     ss.textContent = seconds;
 }
-// console.log(convertMs(2000)); // {days: 0, hours: 0, minutes: 0, seconds: 2}
-// console.log(convertMs(140000)); // {days: 0, hours: 0, minutes: 2, seconds: 20}
-// console.log(convertMs(24140000)); // {days: 0, hours: 6 minutes: 42, seconds: 20}
-
-// const input = document.querySelector('#datetime-picker');
-
-// const date = new Date();
-// console.log(date.getTime()); час в мс
-
-
-
-
-console.log(fp.now.getTime());
 
