@@ -19,12 +19,7 @@ const options = {
   time_24hr: true,
   defaultDate: new Date(),
   minuteIncrement: 1,
-    onClose,
-};
-
-const flatpickr = flatpickr("#datetime-picker", options);
-
-function onClose(selectedDates) {
+    onClose(selectedDates) {
         finalDates = selectedDates[0];
         const currentTime = Date.now();
     if (finalDates < currentTime) {
@@ -32,7 +27,12 @@ function onClose(selectedDates) {
     } else {
         btn.disabled = false;
     }
-  }
+  },
+};
+
+const flatpickr = flatpickr("#datetime-picker", options);
+
+
 
 function onBtnClick() {
     input.setAttribute('disabled', 'true');
