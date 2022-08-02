@@ -17,7 +17,7 @@ function onSubmitListener() {
       delay += stepEl;
     }
   
-    createPromise(`${position}`, `${delay}`)
+    createPromise(position, delay)
       .then(({ position, delay }) => {
         Notiflix.Notify.success(`Fulfilled promise ${position} in ${delay}ms`);
       })
@@ -28,12 +28,12 @@ function onSubmitListener() {
 }
   
   function createPromise(position, delay) {
-    return new Promise((fulfill, reject) => {
+    return new Promise((resolve, reject) => {
       const shouldResolve = Math.random() > 0.3;
 
       setTimeout(() => {
         if (shouldResolve) {
-          fulfill({ position, delay });
+          resolve({ position, delay });
         } else {
           reject({ position, delay });
         }

@@ -4,15 +4,14 @@ import Notiflix from 'notiflix';
 
 const btn = document.querySelector('button[data-start]');
 const input = document.querySelector('#datetime-picker');
-const dd = document.querySelector('span[data-days]');
-const hh = document.querySelector('span[data-hours]');
-const mm = document.querySelector('span[data-minutes]');
-const ss = document.querySelector('span[data-seconds]');
+const daysOnTimer = document.querySelector('span[data-days]');
+const hoursOnTimer = document.querySelector('span[data-hours]');
+const minutesOnTimer = document.querySelector('span[data-minutes]');
+const secondsOnTimer = document.querySelector('span[data-seconds]');
 
 btn.disabled = true;
-const date = new Date();
 let finalDates;
-let deltaTime;
+btn.addEventListener('click', onBtnClick, { once: true });
 
 
 const options = {
@@ -20,36 +19,38 @@ const options = {
   time_24hr: true,
   defaultDate: new Date(),
   minuteIncrement: 1,
-    onClose(selectedDates) {
+    onClose,
+};
+
+const flatpickr = flatpickr("#datetime-picker", options);
+
+function onClose(selectedDates) {
         finalDates = selectedDates[0];
-    if (finalDates.getTime() < fp.now.getTime()) {
+        const currentTime = Date.now();
+    if (finalDates < currentTime) {
         Notiflix.Confirm.show("Please choose a date in the future");
     } else {
         btn.disabled = false;
-        btn.addEventListener('click', onBtnClick, { once: true });
     }
-  },
-};
-
-
-const fp = flatpickr("#datetime-picker", options);
+  }
 
 function onBtnClick() {
     input.setAttribute('disabled', 'true');
+    btn.disabled = true;
     timer();
-    convertMs(deltaTime);
 }
 
 function timer() {
-    timerId = setInterval(() => {
-        const currentTime = Date.now();
-        deltaTime = finalDates.getTime() - currentTime;
+        const timerId = setInterval(() => {
+        currentTime = Date.now();
+        const deltaTime = finalDates - currentTime;
         const { days, hours, minutes, seconds } = convertMs(deltaTime);
 
         if (deltaTime > 0) {
             onSpanResult({ days, hours, minutes, seconds });
         } else {
             input.removeAttribute('disabled');
+            clearInterval(timerId);
             return;
         }
     }, 1000);
@@ -79,9 +80,9 @@ function convertMs(ms) {
 }
 
 function onSpanResult({ days, hours, minutes, seconds }) {
-    dd.textContent = days;
-    hh.textContent = hours;
-    mm.textContent = minutes;
-    ss.textContent = seconds;
+    daysOnTimer.textContent = days;
+    hoursOnTimer.textContent = hours;
+    minutesOnTimer.textContent = minutes;
+    secondsOnTimer.textContent = seconds;
 }
 
