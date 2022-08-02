@@ -11,6 +11,7 @@ const secondsOnTimer = document.querySelector('span[data-seconds]');
 
 btn.disabled = true;
 let finalDates;
+let currentTime;
 btn.addEventListener('click', onBtnClick, { once: true });
 
 
@@ -21,7 +22,7 @@ const options = {
   minuteIncrement: 1,
     onClose(selectedDates) {
         finalDates = selectedDates[0];
-        const currentTime = Date.now();
+        currentTime = Date.now();
     if (finalDates < currentTime) {
         Notiflix.Confirm.show("Please choose a date in the future");
     } else {
